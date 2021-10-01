@@ -7,6 +7,6 @@ int function() {
 
 int main(void)
 {
-	int &b = function();
+	//int &b = function();
 	return 0;
 }

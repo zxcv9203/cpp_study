@@ -1,7 +1,7 @@
 #include <iostream>
 
 int main() {
-	int &ref = 4;
+	//int &ref = 4; error
 
-	std::cout << ref << std::endl;
+	//std::cout << ref << std::endl;
 }
