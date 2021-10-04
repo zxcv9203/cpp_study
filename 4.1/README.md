@@ -285,3 +285,9 @@ void set_animal(int _food, int _weight) {
 	weight = _weight;
 }
 ```
+
+위는 각 멤버 변수들의 값을 설정하는 부분인데요, 여기서 food와 weight는 누구의 것일까요?
+
+당연하게도 객체(class) 자신의 것입니다.
+
+그렇기 때문에 food와 weight가 누구 것인지 명시할 필요 없이 그냥 food weight라고 사용하면 됩니다.
