@@ -107,4 +107,181 @@ animal.happy += 10;
 
 노트북을 제대로 사용하기란 굉장히 힘들것입니다.
 
+> 클래스
 
+자 그러면 객체는 C++ 상에서 어떻게 만들어낼까요?
+
+이를 위해 C++에서 객체를 만들 수 있는 장치를 준비하였습니다.
+
+쉽게 말하면 객체의 설계도라고 볼 수 있지요
+
+바로 클래스입니다.
+
+클래스를 이용해서 만들어진 객체를 인스턴스라고 합니다.
+
+앞서 객체의 변수와 메서드를 인스턴스 변수와 인스턴스 메서드라고 한 이유입니다.
+
+다음과 같이 C++ 코드를 작성해봅시다.
+
+``` c++
+#include <iostream>
+
+class Animal {
+	private:
+		int food;
+		int weight;
+	public:
+		void set_animal(int _food, int _weight) {
+			food = _food;
+			weight = _weight;
+		}
+		void increase_food(int inc) {
+			food += inc;
+			weight += (inc / 3);
+		}
+		void view_stat() {
+			std::cout << "이 동물의 food : " << food << std::endl;
+			std::cout << "이 동물의 weight : " << weight << std::endl;
+		}
+}; // 세미콜론을 꼭 써주어야 합니다.
+
+int main() {
+	Animal animal;
+	animal.set_animal(100, 50);
+	animal.increase_food(30);
+	animal.view_stat();
+	return 0;
+}
+```
+
+코드를 한 번 살펴봅시다.
+
+``` cpp
+Animal animal;
+```
+
+먼저 main 함수에서 Animal 클래스의 인스턴스를 어떻게 생성하였는지 살펴 봅시다.
+
+기존의 구조체에서 구조체 변수를 생성할 때와 동일한데, 구조체의 경우 앞에 struct를 명시 했어야 했지만 여기서는 그러지 않아도 됩니다.
+
+그냥 int나 char 처럼 Animal이라고 써주면 됩니다.
+
+위와 같이 `Animal animal;`을 하면 Animal 클래스의 animal 인스턴스를 만든 것입니다.
+
+이제 클래스 내부를 살펴봅시다.
+
+``` cpp
+class Animal {
+	private:
+		int food;
+		int weight;
+	public:
+		void set_animal(int _food, int _weight) {
+			food = _food;
+			weight = _weight;
+		}
+		void increase_food(int inc) {
+			food += inc;
+			weight += (inc / 3);
+		}
+		void view_stat() {
+			std::cout << "이 동물의 food : " << food << std::endl;
+			std::cout << "이 동물의 weight : " << weight << std::endl;
+		}
+}; 
+```
+
+위는 Animal이라는 클래스를 나타낸 것으로 Animal 클래스를 통해서 생성될 임의의 객체에 대한 설계도라고 볼 수 있습니다.
+
+즉, Animal 클래스를 통해서 생성될 객체는 food, weight라는 변수가 있고, set_animal, increase_food, view_stat 이라는 함수들이 있는데, Animal 클래스상에서 이들을 지칭할 때는 각각 멤버변수와 멤버함수라고 부릅니다.
+
+즉, 인스턴스로 생성된 객체에서는 인스턴스 변수, 인스턴스 함수, 그리고 그냥 클래스 상에서는 멤버 변수, 멤버 함수라고 부르는 것입니다.
+
+멤버 변수와 멤버 함수는 실제하는 것이 아닙니다.
+
+인스턴스가 만들어져야 비로소 사용할 수 있게 됩니다.
+
+예를들어, 아파트 설계도가 있다고 해서 아파트가 실제로 존재하는 것이 아닌 것 처럼 말이죠
+
+클래스의 내부를 좀더 살펴봅시다.
+
+```cpp
+	private:
+		int food;
+		int weight;
+```
+
+먼저 멤버 변수들을 정의한 부분을 봅시다.
+
+처음보는 private 라는 키워드가 있는데 이러한 키워드를 접근 지시자라고 부릅니다.
+
+접근 지시자의 역할은 외부에서 멤버들에 접근을 할 수 있는지 없는지를 알려줍니다.
+
+private 키워드의 경우 아래에 쓰여진 것들은 모두 객체 내에서 보호되고 있다는 의미입니다.
+
+앞서 객체 그림을 떠올려보면 멤버 변수들은 객체 안에서 보호 받고 있었습니다.
+
+private 되고 있는 모든 것들은 자기 객체 안에서만 접근할 수 있을 뿐 객체 내부에서는 접근할 수 없게 됩니다.
+
+다시 말해 다음과 같이 같은 객체안에서 food와 weight에 접근하는 것은 가능한 일이지만
+
+``` cpp
+		void set_animal(int _food, int _weight) {
+			food = _food;
+			weight = _weight;
+		}
+```
+
+다음과 같이 객체밖에서 직접적으로 접근하는 것은 불가능합니다.
+
+``` cpp
+int main() {
+	Animal animal;
+	animal.food = 3030;
+}
+```
+
+다음과 같이 접근지시자를 public으로 설정한 것은 외부에서 마음껏 사용할 수 있습니다.
+
+```c++
+public:
+		void set_animal(int _food, int _weight) {
+			food = _food;
+			weight = _weight;
+		}
+		void increase_food(int inc) {
+			food += inc;
+			weight += (inc / 3);
+		}
+		void view_stat() {
+			std::cout << "이 동물의 food : " << food << std::endl;
+			std::cout << "이 동물의 weight : " << weight << std::endl;
+		}
+```
+
+만약 키워드를 설정하지 않았다면 기본적으로 private로 설정됩니다.
+
+예를들어, 다음과 같이 선언하면 해당 멤버들은 private로 설정됩니다.
+
+```cpp
+class Animal {
+	/* 자동으로 private */
+	int food;
+	int weight;
+}
+```
+
+만일 멤버 변수들도 public으로 공개해버리면 메서드를 외부에서 접근한 것처럼 직접 수정이 가능해집니다.
+
+``` cpp
+animal.food = 100;
+```
+
+마지막으로 멤버 변수에 대해 조금 더 자세히 알아보겠습니다.
+
+``` cpp
+void set_animal(int _food, int _weight) {
+	food = _food;
+	weight = _weight;
+}
+```
